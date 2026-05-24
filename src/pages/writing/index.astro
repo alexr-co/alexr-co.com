@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../site.config';
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const dateFmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<Base title="Writing" description={site.meta.writing}>
+  <p class="prompt-line"><span class="prompt">$</span> ls writing/</p>
+  <h1>Writing</h1>
+  <p class="lede muted">
+    Notes on whatever I am thinking about. Mostly engineering, sometimes not.
+  </p>
+
+  <ul class="post-list">
+    {posts.map((post) => (
+      <li>
+        <a href={`/writing/${post.id}`}>
+          <span class="post-date">{dateFmt(post.data.date)}</span>
+          <div class="post-body">
+            <span class="post-title">{post.data.title}</span>
+            {post.data.description && (
+              <span class="post-desc muted">{post.data.description}</span>
+            )}
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  {posts.length === 0 && (
+    <p class="muted">No posts yet. Add a markdown file to <code>src/content/writing/</code>.</p>
+  )}
+</Base>
+
+<style>
+  .prompt-line {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+  h1 { margin: 0 0 0.75rem; }
+  .lede { max-width: 56ch; margin-bottom: 2rem; }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--border-muted);
+  }
+  .post-list li {
+    border-bottom: 1px solid var(--border-muted);
+  }
+  .post-list a {
+    display: flex;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    color: var(--text-secondary);
+    border-bottom: none;
+    align-items: baseline;
+  }
+  .post-list a:hover {
+    color: var(--text-primary);
+  }
+  .post-date {
+    color: var(--text-faint);
+    font-size: 0.75rem;
+    min-width: 8rem;
+    flex-shrink: 0;
+  }
+  .post-body { display: flex; flex-direction: column; gap: 0.2rem; }
+  .post-title { color: var(--text-primary); }
+  .post-desc { font-size: 0.8rem; }
+
+  @media (max-width: 540px) {
+    .post-list a { flex-direction: column; gap: 0.25rem; }
+  }
+</style>

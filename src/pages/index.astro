@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../site.config';
+
+const writing = (await getCollection('writing'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+
+const journal = (await getCollection('journal'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 1);
+
+const dateFmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<Base>
+  <section class="intro">
+    <p class="prompt-line"><span class="prompt">$</span> whoami</p>
+    <h1>{site.name}</h1>
+    <p class="tagline">
+      Software engineer. I build backend systems, ship small tools, and take pictures
+      of the world in between.
+    </p>
+    <p class="tagline">
+      Currently looking for my next role &mdash; reach me at
+      <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+  </section>
+
+  <section>
+    <p class="prompt-line"><span class="prompt">$</span> ls projects/ <span class="muted">| head -2</span></p>
+    <div class="card-grid">
+      <a class="card" href="/projects#placeholder-one">
+        <p class="eyebrow">project &middot; 2025</p>
+        <h3 class="card-title">Placeholder Project One</h3>
+        <p class="muted card-desc">A short, one-line description of what this thing does and why anyone should care.</p>
+        <p class="tags"><code>go</code> <code>postgres</code> <code>cli</code></p>
+      </a>
+      <a class="card" href="/projects#placeholder-two">
+        <p class="eyebrow">project &middot; 2024</p>
+        <h3 class="card-title">Placeholder Project Two</h3>
+        <p class="muted card-desc">Another project description. Replace this with something real once you scaffold the project page.</p>
+        <p class="tags"><code>typescript</code> <code>react</code></p>
+      </a>
+    </div>
+    <p class="see-all"><a href="/projects">see all projects &rarr;</a></p>
+  </section>
+
+  <section>
+    <p class="prompt-line"><span class="prompt">$</span> tail -2 writing/</p>
+    <ul class="post-list">
+      {writing.map((post) => (
+        <li>
+          <a href={`/writing/${post.id}`}>
+            <span class="post-date">{dateFmt(post.data.date)}</span>
+            <span class="post-title">{post.data.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="see-all"><a href="/writing">all posts &rarr;</a></p>
+  </section>
+
+  {journal.length > 0 && (
+    <section>
+      <p class="prompt-line"><span class="prompt">$</span> tail -1 journal/</p>
+      <ul class="post-list">
+        {journal.map((entry) => (
+          <li>
+            <a href={`/journal/${entry.id}`}>
+              <span class="post-date">{dateFmt(entry.data.date)}</span>
+              <span class="post-title">{entry.data.title}</span>
+              {entry.data.location && (
+                <span class="muted post-loc">&middot; {entry.data.location}</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="see-all"><a href="/journal">full journal &rarr;</a></p>
+    </section>
+  )}
+</Base>
+
+<style>
+  .intro {
+    margin-bottom: 3rem;
+  }
+
+  .prompt-line {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+
+  h1 {
+    margin: 0 0 1rem;
+    font-size: 1.85rem;
+  }
+
+  .tagline {
+    color: var(--text-secondary);
+    max-width: 56ch;
+  }
+
+  section {
+    margin-bottom: 2.75rem;
+  }
+
+  .card-title {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+  }
+
+  .card-desc {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .tags {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .post-list li {
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .post-list a {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.65rem 0;
+    align-items: baseline;
+    color: var(--text-secondary);
+    border-bottom: none;
+  }
+
+  .post-list a:hover {
+    color: var(--text-primary);
+  }
+
+  .post-date {
+    color: var(--text-faint);
+    font-size: 0.75rem;
+    min-width: 8.5rem;
+    flex-shrink: 0;
+  }
+
+  .post-title {
+    flex: 1;
+  }
+
+  .post-loc {
+    font-size: 0.8rem;
+  }
+
+  .see-all {
+    margin: 0.85rem 0 0;
+    font-size: 0.8rem;
+  }
+</style>

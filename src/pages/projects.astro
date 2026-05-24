@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config';
+
+interface Project {
+  slug: string;
+  title: string;
+  year: string;
+  status: 'active' | 'shipped' | 'archived';
+  blurb: string;
+  description: string;
+  tags: string[];
+  links?: { label: string; href: string }[];
+}
+
+// Edit this array to add or remove projects. Each entry renders as a section
+// on the page. The slug becomes the anchor (#slug) for in-page linking.
+const projects: Project[] = [
+  {
+    slug: 'placeholder-one',
+    title: 'Placeholder Project One',
+    year: '2025',
+    status: 'active',
+    blurb: 'A short, one-line description of what this thing does and why anyone should care.',
+    description:
+      'A longer paragraph explaining the project: what problem it solves, the interesting technical decisions, what you learned, and what state it is in today. Two or three sentences is usually plenty.',
+    tags: ['go', 'postgres', 'cli'],
+    links: [
+      { label: 'github', href: 'https://github.com/your-handle/repo' },
+      { label: 'docs',   href: 'https://example.com/docs' },
+    ],
+  },
+  {
+    slug: 'placeholder-two',
+    title: 'Placeholder Project Two',
+    year: '2024',
+    status: 'shipped',
+    blurb: 'Another project description. Replace this with something real.',
+    description:
+      'Frame the project around an outcome — "cut p99 latency from 800ms to 90ms" reads better than "rewrote the cache." Numbers, context, and tradeoffs do more for a reader than feature lists.',
+    tags: ['typescript', 'react', 'redis'],
+    links: [{ label: 'github', href: 'https://github.com/your-handle/repo' }],
+  },
+  {
+    slug: 'placeholder-three',
+    title: 'Placeholder Project Three',
+    year: '2023',
+    status: 'archived',
+    blurb: 'An older project you still want to mention.',
+    description:
+      'Old projects worth keeping are usually the ones that taught you something or pushed an unusual idea. Say what that was.',
+    tags: ['python', 'data'],
+  },
+];
+
+const statusColor: Record<Project['status'], string> = {
+  active:   'var(--accent-prompt)',
+  shipped:  'var(--accent-link)',
+  archived: 'var(--text-faint)',
+};
+---
+
+<Base title="Projects" description={site.meta.projects}>
+  <p class="prompt-line"><span class="prompt">$</span> ls projects/</p>
+  <h1>Projects</h1>
+  <p class="lede muted">
+    A selection of things I have built or am currently building. Code, links,
+    and short writeups where they exist.
+  </p>
+
+  <div class="projects">
+    {projects.map((p) => (
+      <article id={p.slug} class="project">
+        <header class="project-head">
+          <div>
+            <h2>{p.title}</h2>
+            <p class="meta">
+              <span style={`color: ${statusColor[p.status]}`}>{p.status}</span>
+              <span class="faint">&middot;</span>
+              <span class="muted">{p.year}</span>
+            </p>
+          </div>
+        </header>
+        <p class="blurb">{p.blurb}</p>
+        <p>{p.description}</p>
+        <p class="tags">
+          {p.tags.map((t) => <code>{t}</code>)}
+        </p>
+        {p.links && (
+          <p class="links">
+            {p.links.map((l) => (
+              <a href={l.href} target="_blank" rel="noopener noreferrer">{l.label} &rarr;</a>
+            ))}
+          </p>
+        )}
+      </article>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .prompt-line {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+  h1 { margin: 0 0 0.75rem; }
+  .lede { max-width: 56ch; margin-bottom: 2.5rem; }
+
+  .projects { display: flex; flex-direction: column; gap: 2.25rem; }
+
+  .project {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-muted);
+  }
+  .project:last-child { border-bottom: none; }
+
+  .project-head h2 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+
+  .meta {
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 0 0.9rem;
+  }
+
+  .blurb { color: var(--text-secondary); }
+
+  .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 0.75rem 0 0.6rem; }
+
+  .links { margin: 0.5rem 0 0; display: flex; gap: 1rem; font-size: 0.85rem; }
+</style>

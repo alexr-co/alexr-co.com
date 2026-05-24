@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('journal', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const dateFmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<Base
+  title="Journal"
+  description="A photo journal — snapshots of wherever I happen to be."
+>
+  <p class="prompt-line"><span class="prompt">$</span> ls journal/ <span class="muted">-t</span></p>
+  <h1>Journal</h1>
+  <p class="lede muted">
+    Snapshots from wherever I happen to be. A photo and a few sentences for
+    each.
+  </p>
+
+  <div class="entries">
+    {entries.map((entry) => (
+      <a class="entry" href={`/journal/${entry.id}`}>
+        <div class="photo-wrap">
+          {entry.data.image ? (
+            <img src={entry.data.image} alt={entry.data.alt ?? entry.data.title} loading="lazy" />
+          ) : (
+            <div class="photo-placeholder" />
+          )}
+        </div>
+        <div class="entry-meta">
+          <p class="entry-date">
+            {dateFmt(entry.data.date)}
+            {entry.data.location && (
+              <span class="faint"> &middot; {entry.data.location}</span>
+            )}
+          </p>
+          <p class="entry-title">{entry.data.title}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  {entries.length === 0 && (
+    <p class="muted">No entries yet. Add a markdown file to <code>src/content/journal/</code>.</p>
+  )}
+</Base>
+
+<style>
+  .prompt-line {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+  h1 { margin: 0 0 0.75rem; }
+  .lede { max-width: 56ch; margin-bottom: 2rem; }
+
+  .entries {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem 1rem;
+  }
+
+  .entry {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    border-bottom: none;
+    color: var(--text-secondary);
+  }
+
+  .entry:hover .entry-title { color: var(--accent-link); }
+
+  .photo-wrap {
+    aspect-ratio: 4 / 3;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-muted);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .entry:hover .photo-wrap img { transform: scale(1.02); }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  }
+
+  .entry-meta { display: flex; flex-direction: column; gap: 0.2rem; }
+  .entry-date { font-size: 0.7rem; color: var(--text-faint); margin: 0; letter-spacing: 0.04em; }
+  .entry-title { margin: 0; color: var(--text-primary); font-size: 0.9rem; transition: color 0.15s ease; }
+</style>

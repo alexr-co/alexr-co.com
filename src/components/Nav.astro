@@ -1,0 +1,110 @@
+---
+import { site } from '../site.config';
+
+const { pathname } = Astro.url;
+
+const links = [
+  { href: '/',         label: 'home' },
+  { href: '/projects', label: 'projects' },
+  { href: '/writing',  label: 'writing' },
+  { href: '/journal',  label: 'journal' },
+  { href: '/about',    label: 'about' },
+  { href: '/resume',   label: 'resume' },
+  { href: '/contact',  label: 'contact' },
+];
+
+const isActive = (href: string) => {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(href + '/');
+};
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <span class="prompt">~</span><span class="muted">/{site.shortName}</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list">
+        {links.slice(1).map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class={isActive(link.href) ? 'nav-link active' : 'nav-link'}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border-muted);
+    background: var(--bg-primary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+    gap: 1rem;
+  }
+
+  .brand {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+
+  .brand:hover {
+    border-bottom: none;
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: flex-end;
+  }
+
+  .nav-link {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+    border-bottom-color: transparent;
+  }
+
+  .nav-link.active {
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--accent-link);
+  }
+
+  @media (max-width: 540px) {
+    .header-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .nav-list {
+      justify-content: flex-start;
+    }
+  }
+</style>

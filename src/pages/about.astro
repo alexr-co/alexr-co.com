@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config';
+---
+
+<Base title="About" description={site.meta.about}>
+  <p class="prompt-line"><span class="prompt">$</span> cat about.md</p>
+  <h1>About</h1>
+
+  <p class="lede">
+    A short paragraph or two introducing yourself. Where you grew up, what you
+    studied, what kind of work you have ended up doing, and what currently has
+    your attention. Resist the urge to write a resume here &mdash; that is what
+    the resume page is for.
+  </p>
+
+  <p>
+    A second paragraph for color. The things you find interesting outside of
+    work, the way you like to spend a Saturday, the type of problem that hooks
+    you for a weekend. Recruiters skim this; the right teammates read it.
+  </p>
+
+  <h2>Now</h2>
+  <p>
+    A <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer">now page</a>
+    style block: what you are reading, building, learning, or thinking about
+    right now. Update it every month or two so it stays honest.
+  </p>
+
+  <ul class="now-list">
+    <li><span class="now-key">reading</span> <span class="now-val">Designing Data-Intensive Applications</span></li>
+    <li><span class="now-key">building</span> <span class="now-val">This website</span></li>
+    <li><span class="now-key">learning</span> <span class="now-val">Rust, slowly</span></li>
+    <li><span class="now-key">listening</span> <span class="now-val">Nils Frahm on repeat</span></li>
+  </ul>
+
+  <h2>Elsewhere</h2>
+  <ul class="elsewhere">
+    <li><a href={site.social.github} target="_blank" rel="noopener noreferrer">github</a></li>
+    <li><a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">linkedin</a></li>
+    <li><a href={`mailto:${site.email}`}>email</a></li>
+  </ul>
+</Base>
+
+<style>
+  .prompt-line {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+  h1 { margin: 0 0 1.25rem; }
+  .lede { max-width: 60ch; }
+  p { max-width: 60ch; }
+
+  .now-list, .elsewhere {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  .now-list li {
+    display: flex;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed var(--border-muted);
+  }
+
+  .now-key {
+    color: var(--text-muted);
+    min-width: 6rem;
+  }
+
+  .now-val {
+    color: var(--text-primary);
+  }
+
+  .elsewhere {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+</style>

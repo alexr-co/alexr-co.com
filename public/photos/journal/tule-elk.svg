@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9fa885"/>
+      <stop offset="100%" stop-color="#4f5642"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <text x="50%" y="50%" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="#2d3324" opacity="0.5">placeholder &middot; tule-elk.jpg</text>
+</svg>

@@ -1,0 +1,26 @@
+---
+import { site } from '../site.config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span class="muted">&copy; {year} {site.name}</span>
+    <span class="faint">built with astro &middot; running on localhost</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border-muted);
+    padding: 1.25rem 0;
+    font-size: 0.75rem;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>

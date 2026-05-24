@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writing', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <article class="post">
+    <p class="back"><a href="/writing">&larr; all writing</a></p>
+
+    <header class="post-head">
+      <p class="muted post-date">{dateFmt(post.data.date)}</p>
+      <h1>{post.data.title}</h1>
+      {post.data.tags.length > 0 && (
+        <p class="tags">
+          {post.data.tags.map((t) => <code>{t}</code>)}
+        </p>
+      )}
+    </header>
+
+    <div class="post-body">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .back {
+    font-size: 0.8rem;
+    margin: 0 0 1.5rem;
+  }
+  .post-head { margin-bottom: 2rem; }
+  .post-date { font-size: 0.8rem; margin: 0 0 0.5rem; }
+  .post h1 { margin: 0 0 0.75rem; font-size: 1.5rem; }
+
+  .tags {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0 0;
+  }
+
+  .post-body {
+    max-width: 64ch;
+    color: var(--text-secondary);
+  }
+  .post-body :global(h2) { font-size: 1.15rem; margin-top: 2rem; }
+  .post-body :global(h3) { font-size: 1rem; margin-top: 1.5rem; }
+  .post-body :global(p) { line-height: 1.75; }
+</style>

@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config';
+
+const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '');
+---
+
+<Base title="Contact" description={site.meta.contact}>
+  <p class="prompt-line"><span class="prompt">$</span> cat contact.txt</p>
+  <h1>Contact</h1>
+
+  <p class="lede">
+    Easiest way to reach me is email. I read everything and try to reply within
+    a couple of days.
+  </p>
+
+  <ul class="contact-list">
+    <li>
+      <span class="key">email</span>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </li>
+    <li>
+      <span class="key">github</span>
+      <a href={site.social.github} target="_blank" rel="noopener noreferrer">{stripProtocol(site.social.github)}</a>
+    </li>
+    <li>
+      <span class="key">linkedin</span>
+      <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">{stripProtocol(site.social.linkedin)}</a>
+    </li>
+  </ul>
+
+  <p class="muted">
+    If you found a bug on this site &mdash; or have a strong opinion about the
+    color palette &mdash; send it my way.
+  </p>
+</Base>
+
+<style>
+  .prompt-line {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+  h1 { margin: 0 0 1.25rem; }
+  .lede { max-width: 56ch; }
+
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 2rem;
+  }
+  .contact-list li {
+    display: flex;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--border-muted);
+    align-items: baseline;
+  }
+  .key {
+    color: var(--text-muted);
+    min-width: 6rem;
+  }
+</style>

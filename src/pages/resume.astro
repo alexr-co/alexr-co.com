@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config';
+---
+
+<Base title="Resume" description={site.meta.resume}>
+  <p class="prompt-line"><span class="prompt">$</span> cat resume.txt</p>
+  <h1>Resume</h1>
+  <p class="lede">
+    A condensed work history. The full PDF lives
+    <a href={site.resumeFile}>here</a> &mdash; drop the file in
+    <code>public/</code> and that link will work.
+  </p>
+
+  <section class="block">
+    <h2>Experience</h2>
+
+    <article class="entry">
+      <header class="entry-head">
+        <h3>Senior Software Engineer &middot; <span class="company">Company Name</span></h3>
+        <span class="dates">2023 &mdash; present</span>
+      </header>
+      <ul class="bullets">
+        <li>One concrete, outcome-shaped bullet about the impact you had.</li>
+        <li>A second bullet that names the system, the change, and the result.</li>
+        <li>A third bullet that hints at scope or scale &mdash; team size, traffic, etc.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <header class="entry-head">
+        <h3>Software Engineer &middot; <span class="company">Previous Company</span></h3>
+        <span class="dates">2020 &mdash; 2023</span>
+      </header>
+      <ul class="bullets">
+        <li>What you owned and how it changed while you were there.</li>
+        <li>A specific project worth surfacing.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="block">
+    <h2>Education</h2>
+    <article class="entry">
+      <header class="entry-head">
+        <h3>B.S. Computer Science &middot; <span class="company">University Name</span></h3>
+        <span class="dates">2016 &mdash; 2020</span>
+      </header>
+    </article>
+  </section>
+
+  <section class="block">
+    <h2>Skills</h2>
+    <p class="skill-row"><span class="skill-key">languages</span> <code>go</code> <code>typescript</code> <code>python</code> <code>sql</code></p>
+    <p class="skill-row"><span class="skill-key">infra</span> <code>postgres</code> <code>redis</code> <code>docker</code> <code>aws</code></p>
+    <p class="skill-row"><span class="skill-key">frontend</span> <code>react</code> <code>astro</code> <code>tailwind</code></p>
+  </section>
+</Base>
+
+<style>
+  .prompt-line {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+  h1 { margin: 0 0 1.25rem; }
+  .lede { max-width: 60ch; }
+
+  .block { margin-bottom: 2.5rem; }
+  .block h2 { margin: 0 0 1.25rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-muted); }
+
+  .entry { margin-bottom: 1.5rem; }
+
+  .entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .entry-head h3 { margin: 0; font-size: 1rem; }
+  .company { color: var(--accent-link); font-weight: 400; }
+  .dates { color: var(--text-faint); font-size: 0.8rem; white-space: nowrap; }
+
+  .bullets {
+    margin: 0.25rem 0 0;
+    padding-left: 1.25rem;
+    color: var(--text-secondary);
+  }
+  .bullets li { margin-bottom: 0.25rem; }
+
+  .skill-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+  }
+
+  .skill-key {
+    color: var(--text-muted);
+    min-width: 6rem;
+  }
+</style>
