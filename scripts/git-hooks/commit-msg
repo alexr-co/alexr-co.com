@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Validate commit subject follows Conventional Commits format.
+# See: https://www.conventionalcommits.org
+
+COMMIT_MSG_FILE="$1"
+SUBJECT=$(head -1 "$COMMIT_MSG_FILE")
+
+# Skip merge / fixup / squash / git-generated revert commits — they have their own format
+if [[ "$SUBJECT" =~ ^(Merge\ |fixup!|squash!|Revert\ ) ]]; then
+    exit 0
+fi
+
+# Skip empty messages (git aborts these separately)
+[[ -z "$SUBJECT" ]] && exit 0
+
+PATTERN='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9/-]+\))?!?: .+'
+
+if ! [[ "$SUBJECT" =~ $PATTERN ]]; then
+    cat <<EOF
+
+  ✗ Commit message does not follow Conventional Commits format.
+
+  Subject was:
+    $SUBJECT
+
+  Required format:
+    <type>(optional-scope): <description>
+
+  Allowed types:
+    feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+
+  Examples:
+    feat: add dark mode toggle
+    fix(footer): correct broken link
+    docs: update readme with deploy steps
+    chore(deps): bump astro to 5.1
+
+  Add '!' before the colon for breaking changes:
+    feat!: drop support for node 18
+    feat(api)!: rename /users endpoint to /people
+
+  Bypass this check (not recommended): git commit --no-verify
+
+EOF
+    exit 1
+fi
