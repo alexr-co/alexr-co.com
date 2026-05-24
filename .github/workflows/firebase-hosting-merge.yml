@@ -20,9 +20,12 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      # npm install (not npm ci) due to npm bug #4828 — the lockfile is generated
-      # on Alpine/musl in our dev container but CI runs Ubuntu/glibc, and npm ci
-      # won't install platform-specific binaries (rollup native) not in the lockfile.
+      # Delete the lockfile + fresh npm install — workaround for npm bug #4828.
+      # Lockfile is generated on Alpine/musl in our dev container; CI runs Ubuntu/glibc.
+      # npm honors the lockfile's recorded optional deps and won't add missing
+      # platform-specific binaries (rollup native, etc). Nuking the lockfile forces
+      # a fresh resolution that picks the right binaries for the runner.
+      - run: rm -f package-lock.json
       - run: npm install
 
       - run: npm run build
