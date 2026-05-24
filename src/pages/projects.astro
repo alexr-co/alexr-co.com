@@ -17,39 +17,18 @@ interface Project {
 // on the page. The slug becomes the anchor (#slug) for in-page linking.
 const projects: Project[] = [
   {
-    slug: 'placeholder-one',
-    title: 'Placeholder Project One',
-    year: '2025',
-    status: 'active',
-    blurb: 'A short, one-line description of what this thing does and why anyone should care.',
-    description:
-      'A longer paragraph explaining the project: what problem it solves, the interesting technical decisions, what you learned, and what state it is in today. Two or three sentences is usually plenty.',
-    tags: ['go', 'postgres', 'cli'],
-    links: [
-      { label: 'github', href: 'https://github.com/your-handle/repo' },
-      { label: 'docs',   href: 'https://example.com/docs' },
-    ],
-  },
-  {
-    slug: 'placeholder-two',
-    title: 'Placeholder Project Two',
-    year: '2024',
+    slug: 'alexr-co-com',
+    title: 'alexr-co.com',
+    year: '2026',
     status: 'shipped',
-    blurb: 'Another project description. Replace this with something real.',
+    blurb: 'This site. Statically generated, multi-cloud, with keyless CI/CD across GCP, Cloudflare, and GitHub.',
     description:
-      'Frame the project around an outcome — "cut p99 latency from 800ms to 90ms" reads better than "rewrote the cache." Numbers, context, and tradeoffs do more for a reader than feature lists.',
-    tags: ['typescript', 'react', 'redis'],
-    links: [{ label: 'github', href: 'https://github.com/your-handle/repo' }],
-  },
-  {
-    slug: 'placeholder-three',
-    title: 'Placeholder Project Three',
-    year: '2023',
-    status: 'archived',
-    blurb: 'An older project you still want to mention.',
-    description:
-      'Old projects worth keeping are usually the ones that taught you something or pushed an unusual idea. Say what that was.',
-    tags: ['python', 'data'],
+      'A multi-page Astro 5 site with content collections for writing and journal entries, deployed on Firebase Hosting with automated deploys via GitHub Actions. Auth between CI and GCP uses Workload Identity Federation (no service account JSON keys ever exist). DNS and cookieless analytics live on Cloudflare; email is on Google Workspace. The local dev environment runs fully containerized via Docker Compose. As much an exercise in deliberate infrastructure choices as a portfolio — every piece of the stack was picked to either work well for this use case or to teach a transferable skill.',
+    tags: ['astro', 'typescript', 'firebase', 'gcp', 'cloudflare', 'github-actions'],
+    links: [
+      { label: 'live',   href: 'https://alexr-co.com' },
+      { label: 'github', href: 'https://github.com/alexr-co/alexr-co.com' },
+    ],
   },
 ];
 
