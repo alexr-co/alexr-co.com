@@ -20,7 +20,10 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - run: npm ci
+      # npm install (not npm ci) due to npm bug #4828 — the lockfile is generated
+      # on Alpine/musl in our dev container but CI runs Ubuntu/glibc, and npm ci
+      # won't install platform-specific binaries (rollup native) not in the lockfile.
+      - run: npm install
 
       - run: npm run build
 
