@@ -1,3 +1,12 @@
+/* ---------- Fonts ---------- */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ---------- Theme tokens ---------- */
 :root {
   /* Surfaces (GitHub-dark inspired) */
@@ -21,7 +30,7 @@
   --accent-warm: #ffa657;     /* warm secondary accent */
 
   /* Type */
-  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", SFMono-Regular, Menlo,
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo,
     Consolas, "Liberation Mono", monospace;
 
   /* Layout */
