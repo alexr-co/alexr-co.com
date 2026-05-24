@@ -5,7 +5,6 @@ on: pull_request
 permissions:
   contents: read
   id-token: write
-  pull-requests: write
 
 jobs:
   build_and_preview:
@@ -34,7 +33,7 @@ jobs:
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          projectId: alexr-co
+      # Call Firebase CLI directly instead of FirebaseExtended/action-hosting-deploy@v0
+      # because that action hardcodes a JSON key requirement and ignores
+      # GOOGLE_APPLICATION_CREDENTIALS set by google-github-actions/auth@v2.
+      - run: npx firebase-tools hosting:channel:deploy pr-${{ github.event.number }} --project alexr-co --expires 7d --non-interactive

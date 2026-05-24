@@ -35,8 +35,8 @@ jobs:
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          projectId: alexr-co
-          channelId: live
+      # Call Firebase CLI directly instead of FirebaseExtended/action-hosting-deploy@v0
+      # because that action hardcodes a JSON key requirement and ignores
+      # GOOGLE_APPLICATION_CREDENTIALS set by google-github-actions/auth@v2.
+      # The CLI picks up ADC automatically.
+      - run: npx firebase-tools deploy --only hosting --project alexr-co --non-interactive
