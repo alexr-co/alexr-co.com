@@ -1,6 +1,6 @@
 ---
 title: "Hello, world"
-date: 2026-05-23
+date: 2026-05-24
 description: "A first post about why this site exists."
 tags: ["meta"]
 ---
