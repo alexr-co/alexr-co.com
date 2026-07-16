@@ -4,9 +4,9 @@ import { site } from '../site.config';
 import { projects, type Project } from '../data/projects';
 
 const statusColor: Record<Project['status'], string> = {
-  active:   'var(--accent-prompt)',
-  shipped:  'var(--accent-link)',
-  archived: 'var(--text-faint)',
+  'in development': 'var(--accent-prompt)',
+  live:             'var(--accent-link)',
+  archived:         'var(--text-faint)',
 };
 ---
 
