@@ -8,8 +8,7 @@ import { site } from '../site.config';
   <h1>Resume</h1>
   <p class="lede">
     A condensed work history. The full PDF lives
-    <a href={site.resumeFile}>here</a> &mdash; drop the file in
-    <code>public/</code> and that link will work.
+    <a href={site.resumeFile}>here</a>.
   </p>
 
   <section class="block">
@@ -17,24 +16,47 @@ import { site } from '../site.config';
 
     <article class="entry">
       <header class="entry-head">
-        <h3>Senior Software Engineer &middot; <span class="company">Company Name</span></h3>
-        <span class="dates">2023 &mdash; present</span>
+        <h3>ADC Engineer II &middot; <span class="company">Amazon Web Services</span></h3>
+        <span class="dates">2022 &mdash; present</span>
       </header>
       <ul class="bullets">
-        <li>One concrete, outcome-shaped bullet about the impact you had.</li>
-        <li>A second bullet that names the system, the change, and the result.</li>
-        <li>A third bullet that hints at scope or scale &mdash; team size, traffic, etc.</li>
+        <li>Support and troubleshoot core VPC networking services across 6 isolated regions spanning 3 air-gapped partitions; contributed to the launch buildout for 3 of those regions by sequencing interdependent components through CI/CD pipelines.</li>
+        <li>Designed and built an internal backup service end-to-end in CDK, protecting hosts across multiple regions and cutting recovery time from 1+ hours to under 10 seconds, with full CloudWatch monitoring across all components.</li>
+        <li>Operate 100+ CI/CD pipelines and adapt Python and Java Lambda functions to resolve partition-specific compatibility issues, from SSL/TLS certificate chains to environment-specific config generation.</li>
+        <li>Handle high-severity, after-hours on-call incidents with live log and metric analysis to drive root cause; mentor and onboard peers on a team of ~10 engineers.</li>
       </ul>
     </article>
 
     <article class="entry">
       <header class="entry-head">
-        <h3>Software Engineer &middot; <span class="company">Previous Company</span></h3>
-        <span class="dates">2020 &mdash; 2023</span>
+        <h3>IT Support Specialist &middot; <span class="company">NCI Information Systems</span></h3>
+        <span class="dates">2020 &mdash; 2022</span>
       </header>
       <ul class="bullets">
-        <li>What you owned and how it changed while you were there.</li>
-        <li>A specific project worth surfacing.</li>
+        <li>Provided expedited IT support to senior Department of Defense officials under rapid-turnaround SLAs, closing 100+ tickets per month as top resolver.</li>
+        <li>Developed PowerShell and Batch automation that cut certain task time by 75% and eliminated 1+ hours of after-hours support.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <header class="entry-head">
+        <h3>Information Technology Specialist &middot; <span class="company">United States Army Reserve</span></h3>
+        <span class="dates">2018 &mdash; 2022</span>
+      </header>
+      <ul class="bullets">
+        <li>Administered LAN/WAN and full network stacks on Cisco routing and switching hardware, maintaining 99% uptime.</li>
+        <li>Established field connectivity during annual training exercises, keeping 3 Army companies linked to remote sites for mission operations.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <header class="entry-head">
+        <h3>Deployment Team Lead &middot; <span class="company">22nd Century Technologies</span></h3>
+        <span class="dates">2019 &mdash; 2020</span>
+      </header>
+      <ul class="bullets">
+        <li>Led a team of 5 to prepare, deploy, and maintain end-user devices; set service policies that drove consistent ticket resolution.</li>
+        <li>Maintained an audit-quality asset database; imaged hundreds of new devices and sanitized end-of-life hardware.</li>
       </ul>
     </article>
   </section>
@@ -44,16 +66,16 @@ import { site } from '../site.config';
     <article class="entry">
       <header class="entry-head">
         <h3>A.S. Computer Science &middot; <span class="company">Northern Virginia Community College</span></h3>
-        <span class="dates">2018 &mdash; 2020</span>
+        <span class="dates">2020</span>
       </header>
     </article>
   </section>
 
   <section class="block">
     <h2>Skills</h2>
-    <p class="skill-row"><span class="skill-key">languages</span> <code>go</code> <code>typescript</code> <code>python</code> <code>sql</code></p>
-    <p class="skill-row"><span class="skill-key">infra</span> <code>postgres</code> <code>redis</code> <code>docker</code> <code>aws</code></p>
-    <p class="skill-row"><span class="skill-key">frontend</span> <code>react</code> <code>astro</code> <code>tailwind</code></p>
+    <p class="skill-row"><span class="skill-key">languages</span> <code>python</code> <code>java</code> <code>typescript</code> <code>powershell</code></p>
+    <p class="skill-row"><span class="skill-key">cloud &amp; infra</span> <code>aws</code> <code>cdk</code> <code>cloudwatch</code> <code>docker</code> <code>ci/cd</code></p>
+    <p class="skill-row"><span class="skill-key">frontend</span> <code>react</code> <code>astro</code></p>
   </section>
 </Base>
 
