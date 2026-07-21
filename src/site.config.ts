@@ -11,7 +11,7 @@ export const site = {
 
   social: {
     github: 'https://github.com/alexr-co',
-    linkedin: 'https://www.linkedin.com/in/your-handle',
+    linkedin: 'https://www.linkedin.com/in/alex-ramos017',
   },
 
   meta: {
